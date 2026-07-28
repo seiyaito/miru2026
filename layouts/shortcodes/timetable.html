@@ -432,7 +432,7 @@
                   <i class="fas fa-clock me-1"></i>
                   <span v-text="sess.start + '–' + sess.end"></span>
                   <span v-if="sess.venue"> | <span v-text="sess.venue"></span></span>
-                  <span v-if="sess.show_chair && sess.chair"> | <span v-text="chairLabel"></span>: <span v-text="sess.chair"></span></span>
+                  <span v-if="sess.chair"> | <span v-text="chairLabel"></span>: <span v-text="sess.chair"></span></span>
                </p>
 
                <ul class="list-unstyled program-list">
@@ -1214,19 +1214,12 @@
                      return p;
                   });
 
-               const sessionType = String(s.session_type || s.type || '')
-                  .toLowerCase()
-                  .trim();
-               const chair = String(
-                  this.localized(s, 'speaker') || this.localized(s, 'chair') || ''
-               ).trim();
+               const chair = String(this.localized(s, 'chair') || '').trim();
 
                dayMap[dateStr].sessions.push(Object.assign({}, s, {
                   title: this.localized(s, 'title') || this.localized(s, 'label'),
                   venue: this.localized(s, 'venue'),
                   chair,
-                  session_type: sessionType,
-                  show_chair: /^(oral|invited)(?:$|[_\s-])/.test(sessionType),
                   start: minToTimeStr(startMin),
                   end: minToTimeStr(endMin),
                   session_code: sessionCode,
